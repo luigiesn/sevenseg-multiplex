@@ -30,6 +30,12 @@ static unsigned char numbers[] = {
     (CONFIG_SEG_A | CONFIG_SEG_B | CONFIG_SEG_C),
     (CONFIG_SEG_A | CONFIG_SEG_B | CONFIG_SEG_C | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_F | CONFIG_SEG_G),
     (CONFIG_SEG_A | CONFIG_SEG_B | CONFIG_SEG_C | CONFIG_SEG_D | CONFIG_SEG_F | CONFIG_SEG_G),
+    (CONFIG_SEG_A | CONFIG_SEG_B | CONFIG_SEG_C | CONFIG_SEG_E | CONFIG_SEG_F | CONFIG_SEG_G),
+    (CONFIG_SEG_C | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_F | CONFIG_SEG_G),
+    (CONFIG_SEG_A | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_F),
+    (CONFIG_SEG_B | CONFIG_SEG_C | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_G),
+    (CONFIG_SEG_A | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_F | CONFIG_SEG_G),
+    (CONFIG_SEG_A | CONFIG_SEG_E | CONFIG_SEG_F | CONFIG_SEG_G),
 };
 
 static unsigned char displaysSegments[CONFIG_NUMBER_OF_DISPLAYS];
@@ -90,6 +96,9 @@ void sevenseg_Init(void) {
 }
 
 void sevenseg_SetValue(unsigned char num, unsigned char value, unsigned char dot) {
+    if (num >= CONFIG_NUMBER_OF_DISPLAYS || value > 0xf) /* Invalid conditions */
+        return;
+
     displaysSegments[num] = numbers[value];
     /* Enable dot */
     if (dot) {

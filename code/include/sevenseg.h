@@ -37,14 +37,14 @@
 #define CONFIG_TURN_OFF                     255
 
 
-/* 
+/*
  * This definitions must be replicated many as the
  * defined number of displays .
  * 		i.e. CONFIG_DISPLAY_X_SELECTOR_POSITON and the
  *			 "X" must be replaced by a display number.
  *
  * All displays selectors must be defined with a relative
- * to a physical port pin position and may be changed to 
+ * to a physical port pin position and may be changed to
  * easy the hardware design.
  */
 #define CONFIG_DISPLAY_0_SELECTOR_POSITON     (0b00000001)
@@ -65,23 +65,23 @@ void sevenseg_Init(void);
  *
  * @param num Display to change the value.
  *      i.e. Select a value less or equal to "CONFIG_NUMBER_OF_DISPLAYS"
- *           macro value. 
+ *           macro value.
  * @param value Value that will be set.
- *		i.e. This value must be between 0 and 9 inclusives
- 			 Diplays go to blank state if value is "CONFIG_TURN_OFF".
+ *		i.e. This value must be between 0 and 15 (0 to f) inclusives
+             Diplays go to blank state if value is "CONFIG_TURN_OFF".
  *
  * @param dot Set dot state.
  *		e.g. If "dot" equals "1", turn on the dot LED
- *			 and if "0", turn off. 
+ *			 and if "0", turn off.
  */
 void sevenseg_SetValue(unsigned char num, unsigned char value, unsigned char dot);
 
 /**
  * @brief This function must be called to do multiplex all displays.
- * 
+ *
  * e.g. Can be called in a main infinite loop or
- * 		in a timer triggered interrupt routine to 
- *		keep cahnge on precise time intervals.   
+ * 		in a timer triggered interrupt routine to
+ *		keep cahnge on precise time intervals.
  */
 void sevenseg_Multiplex(void);
 
