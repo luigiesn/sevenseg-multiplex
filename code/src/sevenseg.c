@@ -18,6 +18,14 @@
 
 #include "../include/sevenseg.h"
 
+/* Preprocessor error messages */
+#if CONFIG_NUMBER_OF_DISPLAYS > 8 || CONFIG_NUMBER_OF_DISPLAYS < 1
+    #error Invalid number of displays, select a number from 1 to 8
+#endif
+#if CONFIG_TURN_OFF <= 15
+    #error Invalid value for turn off command, must be value from 16 to 255
+#endif
+
 /* This contain all numbers from 0 to 9 definitions */
 static unsigned char numbers[] = {
     (CONFIG_SEG_A | CONFIG_SEG_B | CONFIG_SEG_C | CONFIG_SEG_D | CONFIG_SEG_E | CONFIG_SEG_F),
@@ -96,7 +104,10 @@ void sevenseg_Init(void) {
 }
 
 void sevenseg_SetValue(unsigned char num, unsigned char value, unsigned char dot) {
-    if (num >= CONFIG_NUMBER_OF_DISPLAYS || value > 0xf) /* Invalid conditions */
+    /* Invalid conditions */
+    if (num >= CONFIG_NUMBER_OF_DISPLAYS)
+        return;
+    if (value > 0xf && value != CONFIG_TURN_OFF)
         return;
 
     displaysSegments[num] = numbers[value];
